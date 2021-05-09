@@ -104,6 +104,8 @@ class Game:
         self.fps=30
 
     def play(self):
+        global spd
+        spd=1
         pygame.mouse.set_visible=False
         font=pygame.font.SysFont('comicsansms',35)
         duks=[]
@@ -111,6 +113,7 @@ class Game:
         donkeies=[]
         clouds=[]
         while True:
+            spd+=0.005
             gun.rect.update(gun.x,gun.y,40,40)
             for event in pygame.event.get():
                 if event.type==pygame.QUIT:
@@ -149,15 +152,17 @@ class Game:
 
             for duck in duks:
                 duck.fly()
+                duck.speed=spd
                 
             for stork in storks:
                 stork.fly()
-                
+                stork.speed=spd
             for donkey in donkeies:
                 donkey.fly()
-                
+                donkey.speed=spd
             for cloud in clouds:
                 cloud.fly()
+                cloud.speed=spd
             self.disp.blit(self.background,[0,0])
             pygame.mouse.set_cursor((8,8),(0,0),(0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0))
             for duck in duks:
@@ -172,7 +177,6 @@ class Game:
             for cloud in clouds:
                 cloud.show()
             gun.show()
-            self.fps+=0.05
             txt_score=font.render('Score: '+str(gun.score),True,(255,215,0))
             self.disp.blit(txt_score,(226,370))
             txt_shot=font.render('Shot: '+str(gun.shot),True,(255,215,0))
